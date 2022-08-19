@@ -15,6 +15,8 @@ import { AboutComponent } from './about/about.component'
 import { ContactComponent } from './contact/contact.component'
 import { OrderService } from './services/orders.service';
 import { OrdersComponent } from './orders/orders.component';
+import { PaymentComponent } from './payment/payment.component';
+// import { CheckOutComponent } from './checkout/checkout.component';
 
 
 
@@ -32,6 +34,11 @@ const routes: Routes = [
   {path:'about' , component:AboutComponent},
   {path:'contact' , component:ContactComponent},
   {path:'orders' , component:OrdersComponent},
+  {path:'payment' , component:PaymentComponent},
+  // {path:'checkout' , component:CheckOutComponent},
+
+
+
 
 
 

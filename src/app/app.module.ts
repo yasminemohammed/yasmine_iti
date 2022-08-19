@@ -6,9 +6,6 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { CarouselModule } from 'ngx-owl-carousel-o';
 import {NgbPaginationModule, NgbAlertModule} from '@ng-bootstrap/ng-bootstrap';
-
-
-
 // import { MDBBootstrapModule } from 'angular-bootstrap-md';
 
 import { ToastrModule } from 'ngx-toastr';
@@ -34,6 +31,8 @@ import { OrdersComponent } from './orders/orders.component';
 import { AboutComponent } from './about/about.component';
 import { ReviewsComponent } from './reviews/reviews.component';
 import { ContactComponent } from './contact/contact.component';
+import { PaymentComponent } from './payment/payment.component';
+// import { CheckOutComponent } from './checkout/checkout.component';
 
 
 
@@ -60,6 +59,8 @@ import { ContactComponent } from './contact/contact.component';
     AboutComponent,
     ReviewsComponent,
     ContactComponent,
+    PaymentComponent,
+    // CheckOutComponent
 
   ],
   imports: [

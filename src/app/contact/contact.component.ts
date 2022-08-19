@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import {user} from '../classes/user';
-import {ContactService} from '../services/contact.service';
+import {Component, OnInit} from '@angular/core';
+import {FormBuilder, FormGroup} from '@angular/forms';
+import {HttpClient} from '@angular/common/http';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-contact',
@@ -8,20 +9,27 @@ import {ContactService} from '../services/contact.service';
   styleUrls: ['./contact.component.css']
 })
 export class ContactComponent implements OnInit {
-  user: user = new user();
-  data: any;
-  email!: string;
-  constructor(private contactService: ContactService) { }
+  form!: FormGroup;
+
+  constructor(
+    private formBuilder: FormBuilder,
+    private http: HttpClient,
+    private router: Router
+  ) {
+  }
 
   ngOnInit(): void {
-  }
-  sendEmail(name: string, email: string, subject: string, message: string)
-  {
-    this.user.name = name;
-    this.user.email = email;
-    this.user.subject = subject;
-    this.user.message = message;
-    this.contactService.sendEmail(this.user).subscribe( data => {this.data = data; });
+    this.form = this.formBuilder.group({
+      name: '',
+      email: '',
+      subject: '',
+      message: '',
+
+
+    });
   }
 
+  submit(): void {
+    this.http.post('http://localhost:8000/api/v1/contact-us', this.form.getRawValue()).subscribe(() => alert('we will contacts you soon , thank you'));
+  }
 }
