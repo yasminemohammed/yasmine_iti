@@ -1,7 +1,8 @@
-import {Component, OnInit} from '@angular/core';
-import {FormBuilder, FormGroup} from '@angular/forms';
-import {HttpClient} from '@angular/common/http';
-import {Router} from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { AuthService } from '../_services/auth.service';
+import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
+
 
 @Component({
   selector: 'app-register',
@@ -9,27 +10,38 @@ import {Router} from '@angular/router';
   styleUrls: ['./register.component.css']
 })
 export class RegisterComponent implements OnInit {
-  form!: FormGroup;
-
-  constructor(
-    private formBuilder: FormBuilder,
-    private http: HttpClient,
-    private router: Router
-  ) {
-  }
-
+  form: any = {
+    name: null,
+    email: null,
+    password: null,
+    password_confirm:null
+  };
+  isSuccessful = false;
+  isSignUpFailed = false;
+  errorMessage = '';
+  constructor(private toastr: ToastrService,private authService: AuthService ,private router:Router) { }
   ngOnInit(): void {
-    this.form = this.formBuilder.group({
-      name: '',
-      email: '',
-      password: '',
-      password_confirm: '',
-
-
-    });
   }
+  onSubmit(): void {
+    const { name, email, password,password_confirm } = this.form;
+    this.authService.register(name, email, password, password_confirm).subscribe({
+      next: data => {
+        console.log(data);
+        this.isSuccessful = true;
+        this.isSignUpFailed = false;
+        if(Response)
+        {
+          console.log("registeration done successfully");
+          this.toastr.success("registeration done successfully");
+          this.router.navigate(['/login']);
+        }
+       },
+      error: err => {
+        this.errorMessage = err.error.message;
+        this.isSignUpFailed = true;
+        this.toastr.error("registeration failed");
 
-  submit(): void {
-    this.http.post('http://localhost:8000/api/v1/register', this.form.getRawValue()).subscribe(() => this.router.navigate(['/login']));
+      }
+    });
   }
 }

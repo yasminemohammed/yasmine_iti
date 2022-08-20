@@ -30,8 +30,9 @@ export class HomeComponent implements OnInit {
     this.showAllProducts();
     this.showAllSliders();
     this.showAllCategories();
-
    }
+  ngOnInit(): void {
+  }
 
 
   showAllProducts()
@@ -84,11 +85,7 @@ export class HomeComponent implements OnInit {
 
     })
   }
-  ngOnInit(): void {
 
-
-
-  }
 
   customOptions: OwlOptions = {
     loop: true,

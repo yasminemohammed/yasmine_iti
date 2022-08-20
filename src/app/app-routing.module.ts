@@ -12,10 +12,10 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ProfileInfoComponent } from './profile-info/profile-info.component';
 import { AboutComponent } from './about/about.component'
-import { ContactComponent } from './contact/contact.component'
 import { OrderService } from './services/orders.service';
 import { OrdersComponent } from './orders/orders.component';
 import { PaymentComponent } from './payment/payment.component';
+import { ContactusComponent } from './contactus/contactus.component';
 // import { CheckOutComponent } from './checkout/checkout.component';
 
 
@@ -28,13 +28,15 @@ const routes: Routes = [
   {path:'productdetails/:proId/:catId',component:ProductDetailsComponent},
   {path:'register',  component:RegisterComponent},
   {path:'login' , component:LoginComponent},
-  {path:'profile' , canActivate:[ProfileGuard], component:ProfileComponent},
+  {path:'profile' , component:ProfileComponent},
   {path:'profile-info' ,  canActivate:[ProfileGuard], component:ProfileInfoComponent},
   {path:'dashboard' ,  canActivate:[ProfileGuard], component:DashboardComponent},
   {path:'about' , component:AboutComponent},
-  {path:'contact' , component:ContactComponent},
   {path:'orders' , component:OrdersComponent},
   {path:'payment' , component:PaymentComponent},
+  {path:'contactUs' , component:ContactusComponent},
+
+
   // {path:'checkout' , component:CheckOutComponent},
 
 

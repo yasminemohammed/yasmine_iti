@@ -30,8 +30,10 @@ import { ExistedItemsPipe } from './existed-items.pipe';
 import { OrdersComponent } from './orders/orders.component';
 import { AboutComponent } from './about/about.component';
 import { ReviewsComponent } from './reviews/reviews.component';
-import { ContactComponent } from './contact/contact.component';
 import { PaymentComponent } from './payment/payment.component';
+import { AuthInterceptor } from './_helpers/auth.interceptor';
+import { ContactusComponent } from './contactus/contactus.component';
+
 // import { CheckOutComponent } from './checkout/checkout.component';
 
 
@@ -58,8 +60,8 @@ import { PaymentComponent } from './payment/payment.component';
     OrdersComponent,
     AboutComponent,
     ReviewsComponent,
-    ContactComponent,
     PaymentComponent,
+    ContactusComponent,
     // CheckOutComponent
 
   ],
@@ -89,7 +91,7 @@ import { PaymentComponent } from './payment/payment.component';
 
 
   ],
-  providers: [],
+  providers: [AuthInterceptor],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
