@@ -1,8 +1,10 @@
 import { CartService } from './../services/cart.service';
 import { Router } from '@angular/router';
 import { Component, OnInit, Injectable } from '@angular/core';
-import { AuthService } from '../services/auth.service';
+import { AuthService } from '../_services/auth.service';
 import { ToastrService } from 'ngx-toastr';
+import {TokenStorageService} from '../_services/token-storage.service';
+import { zip } from 'rxjs';
 
 declare let $:any;
 
@@ -20,38 +22,23 @@ export class NavbarComponent implements OnInit {
   userData:any = {};
   userName:string = '';
   userRole:string = ''
-
-
   cartItems:any;
   cartLength:any;
   cartTotal:any;
 
   dashboard:boolean = true;
+  isLoggedIn: any;
+  name: any;
+  user: any;
 
-  constructor(private _AuthService:AuthService, public _Router:Router, private _CartService:CartService, private _ToastrService:ToastrService)
+  constructor(private _AuthService:AuthService, private TokenStorageService:TokenStorageService , public _Router:Router, private _CartService:CartService, private _ToastrService:ToastrService)
   {
-    this.userRole = this._AuthService.userRole;
-    console.log(this.userRole);
-
-    this._AuthService.currentUserData.subscribe((currentData:any)=>
-    {
-    if (currentData)
-      {
-        this.isLogin = true;
-        if (localStorage.getItem('updatedData')) // updated profile data
-        {
-          this.userData = currentData;
-          this.userName = this.userData.full_name;
-          return;
-        }
-        this.userData = currentData.user;
-        this.userName = this.userData.full_name;
-      }
-      else
-      {
-        this.isLogin = false;
-      }
-    })
+    this.isLoggedIn = this.TokenStorageService.isLoggedIn();
+    if (this.isLoggedIn) {
+      const user = this.TokenStorageService.getUser();
+      this.name = user?.data?.user.name;
+      console.log(this.name);
+    }
 
     this.showCartData()
   }
@@ -59,20 +46,15 @@ export class NavbarComponent implements OnInit {
   logout()
   {
     localStorage.clear();
-
+    sessionStorage.clear();
+    this.isLoggedIn = false;
+    this.TokenStorageService.clean();
+    this._Router.navigate(['/login']);
     this._AuthService.currentUserData.next(null)
-
-
-
     this._CartService.cartData.next(null) // clear cart data
     this._CartService.cartTotalValue.next('00.0')
     this._CartService.cartItemsLength.next(null)
 
-
-
-
-    this.isLogin = false;
-    this._Router.navigate(['/login']);
   }
   showCartData()
   {

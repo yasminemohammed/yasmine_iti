@@ -16,22 +16,22 @@
 
 
       <div class="info">
-          <a class="auth" *ngIf="!isLogin"  routerLink="/login" >Login </a>
+          <a class="auth" *ngIf="!isLoggedIn"  routerLink="/login" >Login </a>
 
-              <a class="profile" *ngIf="isLogin">
-                  <img (click)="profile_Dropdwon()" id="user_img" [src]="userData.avatar" alt="">
+              <a class="profile" *ngIf="isLoggedIn">
+                  <img (click)="profile_Dropdwon()" id="user_img" src="../../assets/user.png" alt="">
               </a>
-          <div *ngIf="isLogin" class="action">
+          <div *ngIf="isLoggedIn" class="action">
               <div id="profile_menu" class="menu">
                   <ul >
-                  <h6 class="text-center">{{ userName }}</h6>
+                  <h6 class="text-center">{{ name }}</h6>
                   <hr>
                       <li routerLink="/profile-info" ><i class="fa-solid fa-circle-user"></i> My Profile</li>
 
                       <li routerLink="/profile"><i class="fa-solid fa-pen-to-square"></i> Edit Profile</li>
                       <li  routerLink="/dashboard" *ngIf="userRole == 'admin' || userRole == 'seller' " ><i class="fa-solid fa-user-gear"></i> Dashboard</li>
                       <hr>
-                      <li><a class="auth" *ngIf="isLogin"  (click)="logout()" ><i class="fa-solid fa-right-from-bracket"></i> Logout </a></li>
+                      <li><a class="auth" *ngIf="isLoggedIn"  (click)="logout()" ><i class="fa-solid fa-right-from-bracket"></i> Logout </a></li>
                   </ul>
               </div>
           </div>

@@ -33,6 +33,7 @@ export class LoginComponent implements OnInit {
         this.isLoginFailed = false;
         this.isLoggedIn = true;
         this.roles = this.tokenStorage.getUser().roles;
+        this.reloadPage();
         this.toastr.success("logged in successfully");
         this.router.navigate(['/home']);
       },
