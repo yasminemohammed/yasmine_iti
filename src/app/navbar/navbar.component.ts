@@ -3,8 +3,6 @@ import { Router } from '@angular/router';
 import { Component, OnInit, Injectable } from '@angular/core';
 import { AuthService } from '../services/auth.service';
 import { ToastrService } from 'ngx-toastr';
-import {Emitters} from '../emitters/emitters';
-import {HttpClient} from '@angular/common/http';
 
 declare let $:any;
 
@@ -17,13 +15,11 @@ declare let $:any;
   styleUrls: ['./navbar.component.css']
 })
 export class NavbarComponent implements OnInit {
-  authenticated = false;
+
   isLogin:boolean = false;
   userData:any = {};
   userName:string = '';
   userRole:string = ''
-  message = '';
-
 
 
   cartItems:any;
@@ -32,7 +28,7 @@ export class NavbarComponent implements OnInit {
 
   dashboard:boolean = true;
 
-  constructor(private http: HttpClient,private _AuthService:AuthService, public _Router:Router, private _CartService:CartService, private _ToastrService:ToastrService)
+  constructor(private _AuthService:AuthService, public _Router:Router, private _CartService:CartService, private _ToastrService:ToastrService)
   {
     this.userRole = this._AuthService.userRole;
     console.log(this.userRole);
@@ -60,14 +56,22 @@ export class NavbarComponent implements OnInit {
     this.showCartData()
   }
 
-  logoutt()
+  logout()
   {
     localStorage.clear();
 
     this._AuthService.currentUserData.next(null)
+
+
+
     this._CartService.cartData.next(null) // clear cart data
     this._CartService.cartTotalValue.next('00.0')
     this._CartService.cartItemsLength.next(null)
+
+
+
+
+    this.isLogin = false;
     this._Router.navigate(['/login']);
   }
   showCartData()
@@ -99,10 +103,6 @@ export class NavbarComponent implements OnInit {
 
 
     })
-  }
-  logout():void {
-    this.http.post('http://localhost:8000/api/v1/logout', {}, {withCredentials: true})
-      .subscribe(() => this.authenticated = false);
   }
 
   profile_Dropdwon()
@@ -145,21 +145,6 @@ export class NavbarComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    Emitters.authEmitter.subscribe(
-      (auth: boolean) => {
-        this.authenticated = auth;
-      }
-    );
-    this.http.get('http://localhost:8000/api/v1/user', {withCredentials: true}).subscribe(
-      (res:any) => {
-        this.message = `Hi ${res.name}`;
-        Emitters.authEmitter.emit(true);
-      },
-      err => {
-        this.message = 'You are not logged in';
-        Emitters.authEmitter.emit(false);
-      }
-    );
     $('#menu-bar').click(function()
     {
       var menu:any = document.getElementById("menu");

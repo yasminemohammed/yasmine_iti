@@ -20,7 +20,7 @@ export class LoginComponent implements OnInit {
   roles: string[] = [];
   constructor(private toastr: ToastrService,private authService: AuthService, private tokenStorage: TokenStorageService , private router :Router) { }
   ngOnInit(): void {
-    if (this.tokenStorage.getToken()) {
+    if (this.tokenStorage.isLoggedIn()) {
       this.isLoggedIn = true;
       this.roles = this.tokenStorage.getUser().roles;
     }
@@ -29,18 +29,12 @@ export class LoginComponent implements OnInit {
     const { email, password } = this.form;
     this.authService.login(email, password).subscribe({
       next: data => {
-        this.tokenStorage.saveToken(data.tokenStorage);
         this.tokenStorage.saveUser(data);
         this.isLoginFailed = false;
         this.isLoggedIn = true;
         this.roles = this.tokenStorage.getUser().roles;
-        if(Response)
-        {
-          this.toastr.success("logged in successfully");
-          this.router.navigate(['/home']);
-
-        }
-   
+        this.toastr.success("logged in successfully");
+        this.router.navigate(['/home']);
       },
       error: err => {
         this.errorMessage = err.error.message;
@@ -49,6 +43,9 @@ export class LoginComponent implements OnInit {
 
       }
     });
-  }
 
+  }
+  reloadPage(): void {
+    window.location.reload();
+  }
 }

@@ -13,7 +13,7 @@
       novalidate
     >
       <div class="form-group">
-        <label for="name">name</label>
+        <label for="username">name</label>
         <input
           type="text"
           class="form-control"
@@ -23,14 +23,15 @@
           minlength="3"
           maxlength="20"
           #name="ngModel"
+          [ngClass]="{ 'is-invalid': f.submitted && name.errors }"
         />
-        <div class="alert-danger" *ngIf="name.errors && f.submitted">
-          <div *ngIf="name.errors['required']">name is required</div>
+        <div class="invalid-feedback" *ngIf="name.errors && f.submitted">
+          <div *ngIf="name.errors['required']">Username is required</div>
           <div *ngIf="name.errors['minlength']">
-            name must be at least 3 characters
+            Username must be at least 3 characters
           </div>
           <div *ngIf="name.errors['maxlength']">
-            name must be at most 20 characters
+            Username must be at most 20 characters
           </div>
         </div>
       </div>
@@ -44,8 +45,9 @@
           required
           email
           #email="ngModel"
+          [ngClass]="{ 'is-invalid': f.submitted && email.errors }"
         />
-        <div class="alert-danger" *ngIf="email.errors && f.submitted">
+        <div class="invalid-feedback" *ngIf="email.errors && f.submitted">
           <div *ngIf="email.errors['required']">Email is required</div>
           <div *ngIf="email.errors['email']">
             Email must be a valid email address
@@ -62,8 +64,9 @@
           required
           minlength="6"
           #password="ngModel"
+          [ngClass]="{ 'is-invalid': f.submitted && password.errors }"
         />
-        <div class="alert-danger" *ngIf="password.errors && f.submitted">
+        <div class="invalid-feedback" *ngIf="password.errors && f.submitted">
           <div *ngIf="password.errors['required']">Password is required</div>
           <div *ngIf="password.errors['minlength']">
             Password must be at least 6 characters
@@ -71,20 +74,21 @@
         </div>
       </div>
       <div class="form-group">
-        <label for="password_confirm">Password_confirm</label>
+        <label for="password_confirm">password_confirm</label>
         <input
           type="password"
           class="form-control"
-          name="Password_confirm"
-          [(ngModel)]="form.Password_confirm"
+          name="password_confirm"
+          [(ngModel)]="form.password_confirm"
           required
           minlength="6"
           #password_confirm="ngModel"
+          [ngClass]="{ 'is-invalid': f.submitted && password_confirm.errors }"
         />
-        <div class="alert-danger" *ngIf="password_confirm.errors && f.submitted">
+        <div class="invalid-feedback" *ngIf="password_confirm.errors && f.submitted">
           <div *ngIf="password_confirm.errors['required']">Password is required</div>
           <div *ngIf="password_confirm.errors['minlength']">
-            Password_confirm must be at least 6 characters
+            Password must be at least 6 characters
           </div>
         </div>
       </div>
@@ -92,7 +96,9 @@
         <button class="btn btn-primary btn-block">Sign Up</button>
       </div>
 
+
     </form>
+
    
   </div>
 </div>

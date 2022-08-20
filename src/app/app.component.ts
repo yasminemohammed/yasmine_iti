@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { TokenStorageService } from './_services/token-storage.service';
+import { AuthService } from './_services/auth.service';
 
 declare let $:any;
 @Component({
@@ -10,15 +11,15 @@ declare let $:any;
 export class AppComponent implements OnInit{
   title = 'testApp';
   private roles: string[] = [];
-  isLoggedIn = false;
-  showAdminBoard = false;
-  showModeratorBoard = false;
-  name?: string;
-  constructor(private tokenStorageService: TokenStorageService) { }
+    isLoggedIn = false;
+    showAdminBoard = false;
+    showModeratorBoard = false;
+    name?: string;
+  constructor(private tokenStorageService: TokenStorageService,private authService: AuthService) { }
 
   ngOnInit(): void
   {
-    this.isLoggedIn = !!this.tokenStorageService.getToken();
+    this.isLoggedIn = this.tokenStorageService.isLoggedIn();
     if (this.isLoggedIn) {
       const user = this.tokenStorageService.getUser();
       this.name = user.name;
@@ -36,9 +37,11 @@ export class AppComponent implements OnInit{
     })
   }
   logout(): void {
-    this.tokenStorageService.signOut();
+    this.tokenStorageService.clean();
     window.location.reload();
-  }
+
+}
+
 }
 
 

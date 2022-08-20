@@ -9,6 +9,7 @@ const httpOptions = {
   providedIn: 'root'
 })
 export class AuthService {
+  [x: string]: any;
   constructor(private http: HttpClient) { }
   login(email: string, password: string): Observable<any> {
     return this.http.post(AUTH_API + 'login', {
@@ -23,5 +24,8 @@ export class AuthService {
       password,
       password_confirm,
     }, httpOptions);
+  }
+  logout(): Observable<any> {
+    return this.http.post(AUTH_API + 'logout', { }, httpOptions);
   }
 }

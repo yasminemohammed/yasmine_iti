@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../_services/auth.service';
-import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register',
@@ -14,32 +13,35 @@ export class RegisterComponent implements OnInit {
     name: null,
     email: null,
     password: null,
-    password_confirm:null
+    password_confirm:null,
   };
   isSuccessful = false;
   isSignUpFailed = false;
   errorMessage = '';
-  constructor(private toastr: ToastrService,private authService: AuthService ,private router:Router) { }
+
+  constructor(private toastr: ToastrService,private authService: AuthService , private router:Router) { }
+
   ngOnInit(): void {
   }
+
   onSubmit(): void {
     const { name, email, password,password_confirm } = this.form;
-    this.authService.register(name, email, password, password_confirm).subscribe({
+
+    this.authService.register(name, email, password,password_confirm).subscribe({
       next: data => {
         console.log(data);
         this.isSuccessful = true;
         this.isSignUpFailed = false;
-        if(Response)
-        {
-          console.log("registeration done successfully");
-          this.toastr.success("registeration done successfully");
-          this.router.navigate(['/login']);
-        }
-       },
+        this.toastr.success("registeration done successfully");
+        this.router.navigate(['/login']);
+
+
+      },
       error: err => {
         this.errorMessage = err.error.message;
         this.isSignUpFailed = true;
         this.toastr.error("registeration failed");
+
 
       }
     });
