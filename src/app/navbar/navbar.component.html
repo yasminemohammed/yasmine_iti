@@ -4,19 +4,19 @@
 
   <nav id="menu" class="navbar navbar-expand-lg  ">
       <a class="nav-link m-3"  routerLink="/home" routerLinkActive="activebutton" >Home</a>
-      <a class="nav-link m-3" routerLink="/" routerLinkActive="router-link-active">About</a>
+      <a class="nav-link m-3" routerLink="/about" routerLinkActive="router-link-active">About</a>
       <a class="nav-link m-3"  routerLink="/shop" routerLinkActive="activebutton" >Shop</a>
-      <a  class="nav-link m-3" routerLink="/order" routerLinkActive="activebutton" >Orders</a>
-
-
+      <a  class="nav-link m-3" routerLink="/orders" routerLinkActive="activebutton" >Orders</a>
       <!-- <a class="nav-link" routerLink="/profile" routerLinkActive="activebutton" >Portofolio</a> -->
-      <a class="nav-link m-3" href="#contact">Contact</a>
+      <a class="nav-link m-3" routerLink="/contactUs" routerLinkActive="activebutton">Contact</a>
   </nav>
 
 
 
       <div class="info">
           <a class="auth" *ngIf="!isLoggedIn"  routerLink="/login" >Login </a>
+          <a class="auth" *ngIf="!isLoggedIn"  routerLink="/register" >register </a>
+
 
               <a class="profile" *ngIf="isLoggedIn">
                   <img (click)="profile_Dropdwon()" id="user_img" src="../../assets/user.png" alt="">
