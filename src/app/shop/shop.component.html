@@ -6,14 +6,14 @@
 </section>
 
 <section class="shop_container products">
-
+    
     <div class="container">
         <div class="row">
             <div class="col-md-3">
                 <div class="product_filter ">
 
                     <h5 class="my-4">Home/Shop</h5>
-                        <select (change)="filterByCat($event)" class="form-select my-5" aria-label="Default select example" place>
+                        <select (change)="filterByCat($event.target)" class="form-select my-5" aria-label="Default select example" place>
                             <option disabled selected hidden>filter by Category</option>
                             <option  *ngFor="let cat of catsData" [value]="cat.name">{{cat.name}}</option>
                           </select>
@@ -23,38 +23,12 @@
                       <form id="price-range-form">
                         <label for="min-price" class="form-label">Min price:  </label>
                         <span id="min-price-txt" class="fw-bold"> $0</span>
-                        <input type="range" class="form-range" min="0" max="999" id="min-price" step="10" value="0" (change)="getMinPrice($event.target)" >
+                        <input type="range" class="form-range" min="0" max="999" id="min-price" step="1" value="0" (change)="getMinPrice($event.target)" >
 
                         <label for="max-price" class="form-label">Max price: </label>
-                        <span id="max-price-txt" class="fw-bold"> $20000</span>
-                        <input type="range" class="form-range" min="1" max="20000" id="max-price" step="10" value="20000" (change)="getMaxPrice($event.target)" >
+                        <span id="max-price-txt" class="fw-bold"> $10000</span>
+                        <input type="range" class="form-range" min="1" max="1000" id="max-price" step="1" value="1000" (change)="getMaxPrice($event.target)" >
                     </form>
-                    </div>
-
-                    <div class="viewed my-3">
-                        <h6 class="fw-bold">RECENTLY VIEWED PRODUCTS</h6>
-                            <div class="item d-flex">
-                                <img class="img-fluid" src="assets/mobile.jpg" alt="">
-                                <div class="item_details mt-3">
-                                    <h6>Mobile Samsounq A53 </h6>
-                                    <h6>$300.00</h6>
-                                </div>
-                            </div>
-                                <hr>
-
-                            <div class="item d-flex">
-                                <img class="img-fluid" src="assets/mobile.jpg" alt="">
-                                <div class="item_details mt-3">
-                                    <h6>Mobile Samsounq A53 </h6>
-                                    <h6>$300.00</h6>
-                                </div>
-                            </div>
-                                <hr>
-                    </div>
-
-                    <div class="video">
-                        <h5 class="my-3">SEE OUR PRODUCT</h5>
-                        <video src=""></video>
                     </div>
 
                 </div>
@@ -71,16 +45,6 @@
                             </div>
                     </div>
 
-                    <div class="col-md-2 offset-2">
-                        <!-- <i class="fa-solid fa-table-cells dis"></i> -->
-                        <select (change)="getPerPage($event.target)" class="form-select" aria-label="Default select example" place>
-                            <option disabled selected hidden>Show </option>
-                            <option value="9" >9 Products</option>
-                            <option value="15">15 Products</option>
-                            <option value="24" >24 Products</option>
-                        </select>
-                    </div>
-
                 </div>
 
                 <div *ngIf="displayProducts.length < 1" class="spinerLoader w-100 text-center my-5">
@@ -88,22 +52,26 @@
                 </div>
 
                     <div class="row">
-
-                        <div *ngFor="let item of displayProducts|search:term|catFilter:catType|existedItems:cartItems" class="col-md-4">
+                        
+                        <div *ngFor="let item of displayProducts|search:term|existedItems:cartItems" class="col-md-4">
                             <div  class="productBox" >
                                 <div class="product_img">
                                     <div [routerLink]="['/productdetails', item.id, item.category?.id]" class="product_img_layer"><i class="fa-solid fa-magnifying-glass"></i></div>
-                                    <img class="img-fluid w-100" [src]="item.image"  alt="">
+                                    <img class="img-fluid w-100" [src]="item?.image" alt="">
                                 </div>
 
                                 <div class="d-flex justify-content-between">
-                                    <div class="stars mt-1" >
+                                <p class="type">{{item.category?.name || 'category name'}}  </p>
+                                    <div class="stars mt-1">
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star-half-stroke"></i>
                                     </div>
                                 </div>
                                 <h5 class="name ">{{item.name}} </h5>
-                                <h5>{{item.rating}}</h5>
 
-                                <h6 class="price">{{item.price}}$</h6>
+
+                                <h6 class="price">{{item.price}} $ </h6>
                                 <a id="addLinkBtn_{{item.id}}" class="img_head " ><button id="addItemBtn_{{item.id}}" class="btn btn-dark   " (click)="addItemToCart(item.id)">Add To Cart</button></a>
                                 <!-- <a *ngIf="isAdded" class="img_head " ><button disabled class="btn btn-outline-dark">Add To Cart</button></a> -->
                             </div>
@@ -125,7 +93,7 @@
                         <div class="col-md-3"></div>
                         <div class="col-md-3"></div>
                     </div>
-
+                
             </div>
         </div>
     </div>

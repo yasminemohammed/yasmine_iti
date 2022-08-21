@@ -83,7 +83,13 @@ export class ShopComponent implements OnInit {
 
     filterByCat(event:any)
     {
-      this.catType = event.catValue; // to use it by pipe filter
+      this.catType = event.value; // to use it by pipe filter 
+           
+      this._ProductsService.getProductByCat(this.catType).subscribe((resp)=>
+      {
+        console.log(resp);
+        this.displayProducts = resp.data; 
+      })
     }
 
     addItemToCart(itemId:number)
@@ -122,8 +128,9 @@ export class ShopComponent implements OnInit {
     filterByPrice()
     {
         console.log(this.minPrice)
-        let productsArray = this.allProducts;
-        this.displayProducts = productsArray.filter((product:any)=>  {return Number(product.price) >= Number(this.minPrice) && Number(product.price) <= Number(this.maxPrice)  });
+        let productsArray = this.allProducts;        
+        this.displayProducts = productsArray.filter((product:any)=>
+          {return Number(product.price) >= Number(this.minPrice) && Number(product.price) <= Number(this.maxPrice)  });
     }
 
     nextPagination()
@@ -131,13 +138,12 @@ export class ShopComponent implements OnInit {
       if(this.currentPage < this.lastPage)
       {
         this.currentPage ++;
-        this._ProductsService.getAllProducts(this.currentPage).subscribe((resp)=>
+        this._ProductsService.getProductsPerPage(this.currentPage).subscribe((resp)=>
         {
           this.displayProducts = resp.data
           this.checkExistingItems()
-          console.log(resp);
 
-        })
+        }) 
       }
     }
 
@@ -146,10 +152,10 @@ export class ShopComponent implements OnInit {
       if(this.currentPage > 1)
       {
         this.currentPage --;
-        this._ProductsService.getAllProducts(this.currentPage).subscribe((resp)=>
+        this._ProductsService.getProductsPerPage(this.currentPage).subscribe((resp)=>
         {
           this.displayProducts = resp.data;
-
+          
         })
       }
     }
@@ -157,14 +163,15 @@ export class ShopComponent implements OnInit {
     getByPage(pageNum:any)
     {
       this.currentPage = pageNum;
-      this._ProductsService.getAllProducts(pageNum).subscribe((resp)=>
+      this._ProductsService.getProductsPerPage(pageNum).subscribe((resp)=>
       {
         console.log(pageNum);
+        console.log(resp.data)
         this.displayProducts = resp.data;
-
+        
       })
     }
-
+    
 
 
   ngOnInit(): void {
